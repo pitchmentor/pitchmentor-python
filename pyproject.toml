@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pitchmentor"
-version = "0.1.0"
+version = "0.1.1"
 description = "Official Python SDK for the Pitch Mentor API (real-time AI sales coaching)."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -23,8 +23,8 @@ dependencies = ["requests>=2.31.0"]
 [project.urls]
 Homepage = "https://pitchmentor.net"
 Documentation = "https://pitchmentor.net/docs"
-Repository = "https://github.com/pitchmentor/sdk"
-Issues = "https://github.com/pitchmentor/sdk/issues"
+Repository = "https://github.com/pitchmentor/pitchmentor-python"
+Issues = "https://github.com/pitchmentor/pitchmentor-python/issues"
 
 [project.optional-dependencies]
 dev = ["mypy>=1.10", "types-requests"]

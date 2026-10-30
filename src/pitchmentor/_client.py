@@ -12,7 +12,7 @@ import requests
 from ._generated import Operations, Page
 from .errors import APIConnectionError, error_from_response, parse_retry_after
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 DEFAULT_BASE_URL = "https://api.pitchmentor.net"
 _MAX_RETRY_DELAY = 60.0
 
