@@ -1,10 +1,11 @@
 name: Release
 
-# Push a vX.Y.Z tag matching pyproject.toml: checks the version, tests, publishes to PyPI with trusted publishing and
-# creates the GitHub Release. Safe to re-run (existing files and releases are skipped).
+# Push a vX.Y.Z tag matching pyproject.toml: checks the version, tests, publishes to PyPI and creates the GitHub
+# Release. Safe to re-run (existing files and releases are skipped).
 #
-# PyPI trusted publisher (pypi.org → project `pitchmentor` → Publishing, or a "pending publisher" before the first upload):
-#   owner: pitchmentor   repository: pitchmentor-python   workflow: release.yml   environment: pypi
+# Publishes with the repo secret PYPI_API_TOKEN for now. To switch to trusted publishing, add a trusted publisher on
+# pypi.org (project `pitchmentor` → Publishing) with owner `pitchmentor`, repository `pitchmentor-python`,
+# workflow `release.yml`, environment `pypi`, then remove the `password:` line below.
 on:
   push:
     tags: ["v*"]
@@ -49,6 +50,7 @@ jobs:
       - uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 # v1.14.3
         with:
           skip-existing: true
+          password: ${{ secrets.PYPI_API_TOKEN }} # remove to use trusted publishing
 
   github-release:
     needs: pypi
