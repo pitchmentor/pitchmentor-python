@@ -52,6 +52,32 @@ class Call(TypedDict):
     userPicture: str | None
 
 
+class CallCompletedData(TypedDict):
+    id: str
+    createdAt: str
+    endedAt: str | None
+    duration: int | None
+    platform: str | None
+    callType: str | None
+    prospectName: str | None
+    prospectPhone: str | None
+    prospectCompany: str | None
+    totalCoachingSuggestions: int | None
+    objectionsDetected: list[str]
+    outcome: str | None
+    callSummary: str | None
+    tokensUsed: int | None
+    callScore: int | None
+    talkRatio: float | None
+    archivedAt: str | None
+    userId: str
+    teamId: str
+    crmLeadId: str | None
+    crmClientId: str | None
+    repTalkTime: int | None
+    customerTalkTime: int | None
+
+
 class CallRecordStructuredTranscriptItem(TypedDict):
     speaker: str
     text: str
@@ -80,10 +106,10 @@ class CallRecord(TypedDict):
     teamId: str
     crmLeadId: str | None
     crmClientId: str | None
-    fullTranscript: str | None
-    structuredTranscript: list[CallRecordStructuredTranscriptItem]
     repTalkTime: int | None
     customerTalkTime: int | None
+    fullTranscript: str | None
+    structuredTranscript: list[CallRecordStructuredTranscriptItem]
 
 
 class CoachingLog(TypedDict):
@@ -193,8 +219,8 @@ class AnalyticsUsers(TypedDict):
 
 class LeadNotesItem(TypedDict):
     content: str
-    author: str
-    createdAt: str
+    author: NotRequired[str]
+    createdAt: NotRequired[str]
 
 
 class Lead(TypedDict):
@@ -883,3 +909,8 @@ class Operations:
         Requires scope `webhooks:write`.
         """
         return self._request("POST", f"/v1/webhooks/{_seg(id)}/deliveries/{_seg(delivery_id)}/replay", idempotency_key=idempotency_key)  # type: ignore[no-any-return]
+
+    def get_open_api(self) -> dict[str, Any]:
+        """This OpenAPI document.
+        """
+        return self._request("GET", "/v1/openapi.json")  # type: ignore[no-any-return]
