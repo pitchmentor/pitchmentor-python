@@ -496,17 +496,17 @@ class UpdateLeadBody(TypedDict):
     metadata: NotRequired[dict[str, Any]]
 
 
-class UpdateTeamBodyObjectionHandlersItem(TypedDict):
+class UpdateTeamConfigBodyObjectionHandlersItem(TypedDict):
     objection: str
     handler: str
 
 
-class UpdateTeamBodyCompetitorsItem(TypedDict):
+class UpdateTeamConfigBodyCompetitorsItem(TypedDict):
     name: str
     weaknesses: NotRequired[str]
 
 
-class UpdateTeamBody(TypedDict):
+class UpdateTeamConfigBody(TypedDict):
     name: NotRequired[str]
     companyDescription: NotRequired[str]
     productsServices: NotRequired[str]
@@ -515,10 +515,10 @@ class UpdateTeamBody(TypedDict):
     toneGuidelines: NotRequired[str]
     customPromptAdditions: NotRequired[str]
     coachingStyleId: NotRequired[str | None]
-    objectionHandlers: NotRequired[list[UpdateTeamBodyObjectionHandlersItem]]
+    objectionHandlers: NotRequired[list[UpdateTeamConfigBodyObjectionHandlersItem]]
     setGoals: NotRequired[str]
     closerGoals: NotRequired[str]
-    competitors: NotRequired[list[UpdateTeamBodyCompetitorsItem]]
+    competitors: NotRequired[list[UpdateTeamConfigBodyCompetitorsItem]]
     industry: NotRequired[str]
     crmBaseUrl: NotRequired[str]
     crmSessionCookie: NotRequired[str]
@@ -649,7 +649,7 @@ class Operations:
         """
         return self._request("GET", "/v1/analytics/overview", query={"period": period, "date": date, "tz": tz, "user_id": user_id})  # type: ignore[no-any-return]
 
-    def get_analytics_users(self, *, period: Literal["7d", "30d", "90d"] | None = None, date: str | None = None, tz: int | None = None) -> AnalyticsUsers:
+    def get_analytics_by_member(self, *, period: Literal["7d", "30d", "90d"] | None = None, date: str | None = None, tz: int | None = None) -> AnalyticsUsers:
         """Per-member call stats.
 
         Requires scope `analytics:read`.
@@ -695,14 +695,14 @@ class Operations:
         """
         return self._request("PATCH", f"/v1/leads/{_seg(id)}", body=body)  # type: ignore[no-any-return]
 
-    def get_team(self) -> TeamConfig:
+    def get_team_config(self) -> TeamConfig:
         """Team settings and coaching context.
 
         Requires scope `team:read`.
         """
         return self._request("GET", "/v1/team")  # type: ignore[no-any-return]
 
-    def update_team(self, body: UpdateTeamBody) -> TeamConfig:
+    def update_team_config(self, body: UpdateTeamConfigBody) -> TeamConfig:
         """Update team settings.
 
         Requires scope `team:write`.
@@ -771,7 +771,7 @@ class Operations:
         """
         return self._request("PATCH", f"/v1/coaching/styles/{_seg(id)}", body=body)  # type: ignore[no-any-return]
 
-    def get_subscription(self) -> BillingStatus:
+    def get_billing_status(self) -> BillingStatus:
         """Plan and subscription status.
 
         Requires scope `billing:read`.
@@ -785,14 +785,14 @@ class Operations:
         """
         return self._request("GET", "/v1/billing/usage")  # type: ignore[no-any-return]
 
-    def get_member_usage(self) -> Page[MemberUsage]:
+    def list_member_usage(self) -> Page[MemberUsage]:
         """Per-member usage for the current period.
 
         Requires scope `billing:read`.
         """
         return self._request("GET", "/v1/billing/usage/members")  # type: ignore[no-any-return]
 
-    def get_referrals(self) -> Referrals:
+    def get_referral_stats(self) -> Referrals:
         """Referral link and stats.
 
         Requires scope `referrals:read`.
